@@ -26,6 +26,16 @@ module.exports = () => {
 
 
   /**
+   *  [button type="primary" url="http://monchovarela.es"] button [/button]
+   */
+  shortcode.add('button', function(element, options) {
+    let type = (options.type) ? options.type : '';
+    let url = (options.url) ? options.url.replace('http:','') : '';
+    return '<a href="'+url+'" class="btn btn-'+type+'">'+element+'</a>';
+  });
+
+
+  /**
    *  [style] css style [/style]
    */
   shortcode.add('style', function(element, options) {

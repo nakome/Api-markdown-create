@@ -125,6 +125,19 @@ You can use shortcodes with [foo] text here [/foo]
 
 
 
+[note padding='1em' background='#f55' color='#fff']
+  The urls in shortcode not use http or https only //
+[/note]
+
+
+
+[button type='primary' url='//monchovarela.es'] button [/button]
+[button type='danger' url='//monchovarela.es'] button [/button]
+[button type='info' url='//monchovarela.es'] button [/button]
+[button type='success' url='//monchovarela.es'] button [/button]
+[button type='warning' url='//monchovarela.es'] button [/button]
+
+
 
 [style]
 pre{
@@ -152,7 +165,6 @@ pre{
   color:white
 }
 [/style]
-
 
 
 

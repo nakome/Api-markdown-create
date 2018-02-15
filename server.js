@@ -58,12 +58,16 @@ app.get("/read/:name",  (req, res) =>{
     readFromFile(filename,res,function(data){
         // parse data
         parser(data, (err, result) => {
+
+            let html = '';
+            html += result.html.replace(/&#39;/g,'"');
+
             if(err){
                 errorFn(res);
             }else{
                 res.send({
                   attributes: result.attributes,
-                  html: shortcode.parse(result.html)
+                  html: shortcode.parse(html)
                 });
             }
         });
@@ -92,6 +96,7 @@ app.get("/find/:name/:key",  (req, res) =>{
         });
     });
 });
+
 
 
 
