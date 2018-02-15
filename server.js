@@ -7,10 +7,37 @@ let parser = require('markdown-parse');
 let shortcode = require('shortcode-parser');
 let shortcodes = require('./shortcodes.js')();
 
+// send json error
+const errorFn = function(response){
+    return response.send({
+      attributes: {
+        title: 'Error 404',
+        description: 'Sorry this file not exists!'
+      },
+      html: 'Page not fount'
+    });
+}
+// read file and send data in callback
+const readFromFile = function(filename,res,callback){
+    // the file location
+    let file = __dirname+'/public/pages/'+filename+'.md';
+    // set json header
+    res.setHeader('Content-Type', 'application/json');
+    // read file
+    fs.readFile(file, 'utf8',(err,data) => {
+      // error
+      if(err){
+        errorFn(res);
+      }else{
+        return callback(data);
+      }
+    });
+}
+
 
 // use public folder
 app.use(express.static('public'));
-// cors
+// use cors
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -21,34 +48,18 @@ app.use(function(req, res, next) {
 app.get("/", function (req, res) {
     res.sendFile(__dirname+'/views/index.html');
 });
+
+
+
 // read/init
 app.get("/read/:name",  (req, res) =>{
-    // the file location
-    let file = __dirname+'/public/pages/'+req.params.name+'.md';
-    // set json header
-    res.setHeader('Content-Type', 'application/json');
-    // read file
-    fs.readFile(file, 'utf8',(err,data) => {
-      // error
-      if(err){
-        res.send({
-          attributes: {
-            title: 'Error 404',
-            description: 'Sorry this file not exists!'
-          },
-          html: 'Page not fount'
-        });
-      }else{
+    let filename = req.params.name;
+    // call function
+    readFromFile(filename,res,function(data){
         // parse data
         parser(data, (err, result) => {
             if(err){
-                res.send({
-                  attributes: {
-                    title: 'Error 404',
-                    description: 'Sorry this file not exists!'
-                  },
-                  html: 'Page not fount'
-                });
+                errorFn(res);
             }else{
                 res.send({
                   attributes: result.attributes,
@@ -56,10 +67,33 @@ app.get("/read/:name",  (req, res) =>{
                 });
             }
         });
-      }
     });
-
 });
+
+
+app.get("/find/:name/:key",  (req, res) =>{
+    let filename = req.params.name,
+    key = req.params.key
+    // call function
+    readFromFile(filename,res,function(data){
+        // parse data
+        parser(data, (err, result) => {
+            if(err){
+                errorFn(res);
+            }else{
+                if(result.attributes[key]){
+                    res.send({
+                      [key]: result.attributes[key]
+                    });
+                }else{
+                    errorFn(res);
+                }
+            }
+        });
+    });
+});
+
+
 
 // listen for requests :)
 var local = true,
