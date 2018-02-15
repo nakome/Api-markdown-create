@@ -58,10 +58,15 @@ app.get("/read/:name",  (req, res) =>{
         });
       }
     });
-    
+
 });
 
 // listen for requests :)
-var listener = app.listen(process.env.PORT, function () {
+var local = true,
+port = 5000;
+if(!local){
+  port = process.env.PORT
+}
+var listener = app.listen(port, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });

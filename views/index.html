@@ -16,89 +16,37 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.rawgit.com/kbrsh/wing/master/dist/wing.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0-beta.3/sketchy/bootstrap.min.css" rel="stylesheet" integrity="sha384-7ELRJF5/u1pkLd0W7K793Y7ZCb1ISE8FjEKiDAwHD3nSDbA2E9Txc423ovuNf1CV" crossorigin="anonymous">
     <style>
       body{padding:1em;}
+      section{
+        animation: fade 2s ease;
+      }
+      @keyframes fade {
+        from{
+          opacity:0;
+        }
+      }
     </style>
   </head>
   <body>
-    
-    <main class="row">
-      <section class="col">
-        <h3>
-          Markdown to Json.
-        </h3>
-        <p>
-          This is a Experiment to transform Markdown files in json format.
-        </p>
-        <p>
-          Check json demo <a href="./read/demo">Demo </a> :) or <a href="./read/another">Another demo </a> ,
-          <br/>
-          <b>You can test with this code</b>
-        </p>
-        
-        <p>
-          <pre>
-            <code>
-let url = 'https://ruddy-stage.glitch.me/read/demo';
-fetch(url)
-.then(r => r.json())
-.then(r => {
-  document.head.title = r.attributes.title;
-  document.body.innerHTML = r.html;
-})
-            </code>
-          </pre>
-        </p>
-        
-        <p>
-          Also you can use shortcodes.
 
-          <pre><code>
-          
-Hello World [color name=violet] Buuu! [/color]
+    <main></main>
 
-hola mundo [blue]Que pasa[/blue]
+    <script rel="javascript">
 
-hola mundo [green]Que pasa[/green]
-
-hola mundo [red]Que pasa[/red]
-
-[note padding=1em background=red color=blue]
-  Hello World
-[/note]
-
-[note padding=1em] 
-  Black note 
-[/note]
-
-[youtube class=iframe id=muONBiadpl8]
-[youtube id=Hfm7q6CT36U]
-          </code></pre>
-          
-          
-        </p>
-    
-        <p>
-          <button class="demo">
-            Test Demo
-          </button>  
-        </p>
-    
-      </section>
-    </main>
-    
-    <script>
-      document.querySelector('.demo').addEventListener('click',(e)=>{
-        e.preventDefault();
-        let url = 'https://ruddy-stage.glitch.me/read/demo';
+        let url = '/read/info',
+        main = document.querySelector('main');
         fetch(url)
         .then(r => r.json())
         .then(r => {
-          document.body.innerHTML += r.html;
-          window.scrollTo(0, 1024);
+          main.innerHTML = 'Loading....';
+          let w = setTimeout(()=>{
+            main.innerHTML = '<section>'+r.html+'</section>';
+            clearTimeout(w);
+          },2000)
         })
-      })
+
     </script>
 
 
