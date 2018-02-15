@@ -1,14 +1,24 @@
+---
+
+title: Info
+
+---
+
+
+
 Info
 ==========
 
-This project is a experiment to transform markdown files in json format, 
+
+This project is a experiment to transform markdown files in json format,
+
 
 
 **Example:**  _demo.md_
 
 ```
   ---
-  
+
   alias:  Create an alias •.
   apropos:  Search Help manual pages (man -k).
   apt-get:  Search for and install software packages (Debian/Ubuntu).
@@ -16,21 +26,19 @@ This project is a experiment to transform markdown files in json format,
   aspell:  Spell Checker.
   awk:  Find and Replace text, database sort/validate/index.
   basename:  Strip directory and suffix from filenames.
-  
+
   ---
 
-  [note padding=1em background=red color=blue]
-    Hello World
-  [/note]
+  Simple text or shortcodes
 
-  [youtube class=iframe id=Hfm7q6CT36U]
-  
 ```
 
-When you go to _https://yoururl/read/demo_
+When you go to _https://make-api-with-markdown.glitch.me/read/demo_
 
 
 **Ouput:**
+
+
 ```
 {
   "attributes":{
@@ -42,5 +50,112 @@ When you go to _https://yoururl/read/demo_
     "awk":"Find and Replace text, database sort/validate/index.",
     "basename":"Strip directory and suffix from filenames."
   },
-  "html":"<div style=\"background:red;color:blue;padding:1em\">  Hello World</div></p>\n<p>\n<p><div class=\"iframe\"><iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/muONBiadpl8\" frameborder=\"0\" allowfullscreen></iframe></div>"
+  "html":"Simple text or shortcodes"
 }
+```
+
+
+
+
+
+
+
+
+### Shortcodes
+
+You can use shortcodes with [foo] text here [/foo]
+
+
+
+**Example:**
+
+
+
+
+[style]
+/**
+  This is a custom style
+*/
+
+pre{
+  padding:1em;
+}
+.responsive {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+}
+.responsive iframe {
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.custom{
+  background:blue;
+  color:white
+}
+[/style]
+
+
+
+
+[row class=custom]
+  [col num=6]
+
+## column 6
+Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam ad doloremque, fugit obcaecati consequatur atque nisi tenetur officiis nobis sequi earum excepturi ipsa, saepe quas eaque sint facilis harum quam.
+
+  [/col]
+  [col num=6]
+
+## column 6
+Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa deleniti, nam, aperiam cum, a facilis reiciendis veritatis, consectetur corporis dicta accusantium fugiat modi! Ipsam, voluptates inventore. Nulla soluta excepturi rerum?
+
+  [/col]
+[/row]
+
+
+[row]
+  [col num=4]
+
+## [big]Column 4[/big]
+Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam ad doloremque, fugit obcaecati consequatur atque nisi tenetur officiis nobis sequi earum excepturi ipsa, saepe quas eaque sint facilis harum quam.
+
+  [/col]
+  [col num=4 class=custom]
+
+## [big]Column 4[/big]
+Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa deleniti, nam, aperiam cum, a facilis reiciendis veritatis, consectetur corporis dicta accusantium fugiat modi! Ipsam, voluptates inventore. Nulla soluta excepturi rerum?
+
+  [/col]
+
+  [col num=4]
+
+## [big]Column 4[/big]
+Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa deleniti, nam, aperiam cum, a facilis reiciendis veritatis, consectetur corporis dicta accusantium fugiat modi! Ipsam, voluptates inventore. Nulla soluta excepturi rerum?
+
+  [/col]
+[/row]
+
+
+
+[big]This shortcode add big first letter[/big]
+
+[big color=red]This shortcode add big first letter with color[/big]
+
+
+[note padding=1em background=grey color=white]
+  This is a note, you can use padding, background, color or simply class
+[/note]
+
+
+
+**Example Youtube video with class and id of video**
+[youtube class=responsive id=muONBiadpl8]
+
+
+
+
